@@ -4,7 +4,10 @@ import Header from './components/Header'
 
 function App(props) {
   return (
-    <h1>This is a {props.title}</h1>
+    <div>
+      {/* <h1>This is a {props.title}</h1> */}
+      <Header name="anna" color="purple"/>
+    </div>
   )
 }
 
