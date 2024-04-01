@@ -1,70 +1,151 @@
-# Getting Started with Create React App
+# Props and children
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Previously, you learned to pass props to and within a component. But there is also a special prop called props.children, which is automatically passed to every component. In this reading, you’ll learn about props.children and its purpose.
 
-## Available Scripts
+To understand the concept of props.children, consider the following real-life situation: you have a couple of apples, and you have a couple of pears. You'd like to carry the apples some distance, so obviously, you'll use a bag.
 
-In the project directory, you can run:
+It's not a "bag for apples", and it's not a "bag for pears." It's just a bag. Nothing about this bag makes it such that it needs to be referred to as a bag in which you'd only and always carry apples, nor a bag in which you'd only and always carry pears.
 
-### `npm start`
+In a way, the bag "doesn't care" if it is used to carry apples or pears. Nothing about the bag changes. There are no changes in the bag's material, size, shape, or color - because it can handle apples or pears being carried inside, without issues.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Now, consider the following component:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```javascript
+function Apples(props) {
+  return (
+    <div className="promo-section">
+        <div>
+            <h2>These apples are: {props.color}</h2>
+            </div>
+            <div>
+            <h3>There are {props.number} apples.</h3>
+        </div>
+    </div>
+  )
+}
+export default Apples
+```
 
-### `npm test`
+There is also a Pears component:
+```javascript
+function Pears(props) {
+  return (
+    <h2>I don't like pears, but my friend, {props.friend}, does</h2>
+  )
+}
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Now, the question is this: Let's say you want a Bag component, which can be used to "carry" Apples or Pears. How would you do that?
 
-### `npm run build`
+This is where props.children comes in.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You can define a Bag component as follows:
+```javascript
+function Bag(props) {
+    const bag = {
+        padding: "20px",
+        border: "1px solid gray",
+        background: "#fff",
+        margin: "20px 0"
+    }
+    return (
+        <div style={bag}>
+            {props.children}
+        </div>
+    )
+}
+export default Bag
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+So, what this does in the Bag component is: it adds a wrapping div with a specific styling, and then gives it props.children as its content.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+But what is this props.children?
 
-### `npm run eject`
+Consider a very simple example:
+```javascript
+<Example>
+    Hello there
+</Example>
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The Hello there text is a child of the Example JSX element. The Example JSX Element above is an "invocation" of the Example.js file, which, in modern React, is usually a function component.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This Hello there text can be passed as a named prop when rendering the Example component.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Here's what that would look like:
+```javascript
+<Example children="Hello there" />
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+There are two ways to perform this action. But this is just the beginning.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+What if you, say, wanted to surround the Hello there text in an h3 HTML element?
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Obviously, in JSX, that is easily achievable:
 
-### Code Splitting
+```javascript
+<Example children={<h3>Hello there</h3>} />
+```
+What if the `<h3>Hello there</h3>` was a separate component, for example, named Hello?
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+In that case, you'd have to update the code like this:
+```javascript
+<Example children={<Hello />} />
+```
 
-### Analyzing the Bundle Size
+You could even make the Hello component more dynamic, by giving it its own prop:
+```javascript
+<Example children={<Hello message="Hello there" />} />
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+So, how can you make the Bag, Apples, and Pears examples from the beginning of this reading work?
 
-### Making a Progressive Web App
+Here's how you'd render the Bag component with the Apples component as its props.children:
+```javascript
+<Bag children={<Apples color="yellow" number="5" />} />
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+And here's how you'd render the Bag component, wrapping the Pears component:
+```javascript
+<Bag children={<Pears friend="Peter" />} />
+```
 
-### Advanced Configuration
+While the above syntax might look strange, it's important to understand what is happening.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Effectively, the above syntax is the same as the two examples below.
+```javascript
+<Bag>
+    <Apples color="yellow" number="5" />
+</Bag>
 
-### Deployment
+<Bag>
+    <Pears friend="Peter" />
+</Bag>
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+You can even have multiple levels of nested JSX elements, or a single JSX element having multiple children, such as, for example:
+```javascript
+<Trunk>
+    <Bag>
+        <Apples color="yellow" number="5" />
+        <Pears friend="Peter" />
+    </Bag>
+</Trunk>
+```
 
-### `npm run build` fails to minify
+So, in the above structure, there's a Trunk JSX element, inside of which is a single Bag JSX element, holding an Apples and a Pairs JSX element.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Before the end of this reading, consider this JSX element again:
+
+```javascript
+<Bag>
+    <Apples color="yellow" number="5" />
+</Bag>
+```
+
+<Bag>
+    <Apples color="yellow" number="5" />
+</Bag>
+
+[Redirect to the resourse](https://www.coursera.org/learn/react-basics/supplement/mMqOU/props-and-children)
