@@ -1,4 +1,4 @@
-export function Bag(props){
+export default function Bag(props){
     const bag = {
         padding: "20px",
         border: "1px solid black",
