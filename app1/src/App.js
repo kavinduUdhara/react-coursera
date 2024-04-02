@@ -8,6 +8,7 @@ import Nav from './components/Nav';
 
 
 function App(props) {
+  console.log(logo);
   return (
     <div>
       {/* <h1>This is a {props.title}</h1> */}
