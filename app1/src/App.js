@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Apples from './components/Apples';
 import Pears from './components/Pears';
 import Bag from './components/Bag';
+import Nav from './components/Nav';
 
 
 function App(props) {
@@ -16,6 +17,7 @@ function App(props) {
         <Pears friend="Joe"/>
       </Bag>
       <Bag children={<Apples color="red" number="5"/>}/>
+      <Nav first="Hello"/>
     </div>
   )
 }
