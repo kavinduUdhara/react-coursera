@@ -470,3 +470,41 @@ Here’s an extension of the above code which shows more ways to work with expre
 
 What is happening here is several props are being passed to the Example component, and rendering each of these props’ values to the screen.
 
+```javascript
+const bool = false;
+const str1 = "just";
+
+function Example(props) {
+    return (
+        <div>
+            <h2>
+                The value of the toggleBoolean prop is:{props.toggleBoolean.toString()}
+            </h2>
+            <p>The value of the math prop is: <em>{props.math}</em></p>
+            <p>The value of the str prop is: <em>{props.str}</em></p>
+        </div>
+    );
+};
+
+export default function App() {
+    return (
+        <div className="App">
+            <Example
+                toggleBoolean={!bool}
+                math={(10 + 20) / 3}
+                str={str1 + ' another ' + 'string'}
+            />
+        </div>
+    );
+};
+```
+
+In this improvement to the Example component, three props are being passed to it: toggleBoolean, math, and str. The toggleBoolean is unchanged, and the math prop and the str prop have been added.
+
+The math prop is there to show that you can add arithmetic operators and numbers inside JSX, and it will be evaluated just like it does in plain JavaScript. 
+
+The str prop is there to show that you can concatenate strings, as well as strings and variables – which is shown by adding string literals of “ another ” and “string” to the str1 variable.
+
+In summary, just like you can use expressions inside function components, you can also use them as prop values inside JSX elements, when rendering those function components.
+
+[Redirect to the resourse](https://www.coursera.org/learn/react-basics/supplement/bIV7p/expressions-as-props)
