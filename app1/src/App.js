@@ -6,21 +6,21 @@ import Pears from './components/Pears';
 import Bag from './components/Bag';
 import Nav from './components/Nav';
 
+const bool = false; 
+
+function Example(props) {
+    return (
+        <h2>The value of the toggleBoolean prop is: {props.toggleBoolean.toString()}</h2>
+    );
+};
 
 function App(props) {
   console.log(logo);
-  return (
-    <div>
-      {/* <h1>This is a {props.title}</h1> */}
-      <Header name="anna" color="purple"/>
-      <Bag>
-        <Apples color="red" number="5"/>
-        <Pears friend="Joe"/>
-      </Bag>
-      <Bag children={<Apples color="red" number="5"/>}/>
-      <Nav first="Hello"/>
-    </div>
-  )
+    return ( 
+        <div className="App"> 
+            <Example toggleBoolean={!bool} /> 
+        </div> 
+    ); 
 }
 
 export default App;
