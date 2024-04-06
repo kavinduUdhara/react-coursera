@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# Event handling and embedded expressions
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+In this reading, you’ll learn the different ways to embed expressions in event handlers in React:
 
-## Available Scripts
+- With an inline anonymous ES5 function 
+- With an inline, anonymous ES6 function (an arrow function) 
+- Using a separate function declaration 
+- Using a separate function expression 
 
-In the project directory, you can run:
+You may find this reading useful as a reference sheet.
 
-### `npm start`
+For clarity and simplicity: a function will simply console log some words. This will allow you to compare the difference in syntax between these four approaches, while the result of the event handling will always be the same: just some words output to the console.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Handling events using inline anonymous ES5 functions
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This approach allows you to directly pass in an ES5 function declaration as the onClick event-handling attribute’s value:
 
-### `npm test`
+```javascript
+<button onClick={function() {console.log('first example')}}>
+    An inline anonymous ES5 function event handler
+</button>
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Although it's possible to write your click handlers using this syntax, it's not a common approach and you will not find such code very often in React apps.
 
-### `npm run build`
+## Handling events using inline anonymous ES6 functions (arrow functions)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+With this approach, you can directly pass in an ES6 function declaration as the onClick event-handling attribute’s value:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```javascript
+<button onClick={() => console.log('second example')}>
+    An inline anonymous ES6 function event handler
+</button>
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This approach is much more common then the previous one. If you want to keep all your logic inside the JSX expression assigned to the onClick attribute, use this syntax.
 
-### `npm run eject`
+## Handling events using separate function declarations
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+With this approach, you declare a separate ES5 function declaration, and then you reference its name in the event-handling onClick attribute, as follows:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```javascript
+function App() {
+    function thirdExample() {
+        console.log('third example');
+    };
+    return (
+        <div className="thirdExample">
+            <button onClick={thirdExample}>
+                using a separate function declaration
+            </button>
+        </div>
+    );
+};
+export default App;
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+This syntax makes sense to be used when your onClick logic is too complex to easily fit into an anonymous function. While this example is not really showing this scenario, imagine a function that has, for example, 20 lines of code, and that needs to be ran when the click event is triggered. This is a perfect use-case for a separate function declaration.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Handling events using separate function expressions
 
-## Learn More
+Tip: A way to determine if a function is defined as an expression or a declaration is: if it does not start the line with the keyword function, then it’s an expression.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+In the following example, you’re assigning an anonymous ES6 arrow function to a const variable – hence, this is a function expression.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+You’re then using this const variable’s name to handle the onClick event, so this is an example of handling events using a separate function expression.
 
-### Code Splitting
+```javascript
+function App() {
+    const fourthExample = () => console.log('fourth example');
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    return (
+        <div className="fourthExample">
+            <button onClick={fourthExample}>
+                using a separate function expression
+            </button>
+        </div>
+  );
+};
+export default App;
+```
 
-### Analyzing the Bundle Size
+The syntax in this example is very common in React. It uses arrow functions, but also allows us to handle situations where our separate function expression spans multiple lines of code.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+In this reading lesson item, you’ve learned the several types of functions you can use to handle events in React. Some of those are more common than others, but now that you know all the different ways of doing this, you can understand other people’s code more easily, as well as choose the syntax that best suits your given use case, such as a specific company coding style guide.
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Redirect to the resourse](https://www.coursera.org/learn/react-basics/supplement/0KEyU/event-handling-and-embedded-expressions)
