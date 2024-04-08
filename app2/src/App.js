@@ -1,12 +1,16 @@
 import './App.css';
-import Btn from './Btn';
-import MoodTogler from './MoodTogler';
+import Child from './components/Child';
+
+let data = {
+  heading : "99% off all items",
+  callToAction: "Everything must go",
+}
 
 function App() {
+  const date = new Date();
   return (
     <div>
-      <Btn />
-      <MoodTogler />
+      <Child message={date.toLocaleTimeString()}/>
     </div>
   );
 }
