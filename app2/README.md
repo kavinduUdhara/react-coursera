@@ -148,4 +148,40 @@ prop data is data outside the component that recive and work with but cannot mut
 
 State data is data inside the component that it controls and can mutate.
 
-![prop and state data](https://github.com/kavinduUdhara/react-coursera/tree/data-and-events/app2/src/components/props-and-state.png)
+![prop and state data](https://raw.githubusercontent.com/kavinduUdhara/react-coursera/tree/data-and-events/app2/src/components/props-and-state.png)
+
+# Using hooks
+
+Now that you understand what hooks are in React and have some basic knowledge on the useState hook, let’s dive in deeper. In this reading, you will learn how to use hooks in React components and understand the use-cases for the useState hook.
+
+Let’s say you have a component with an input text field. The user can type into this text field. The component needs to keep track of what the user types within this text field. You can add state and use the useState hook, to hold the string.
+
+As the user keeps typing, the local state that holds the string needs to get updated with the latest text that has been typed.
+
+Let's discuss the below example.
+```javascript
+import { useState } from 'react';
+
+export default function InputComponent() { 
+  const [inputText, setText] = useState('hello'); 
+
+  function handleChange(e) { 
+    setText(e.target.value); 
+  } 
+
+  return ( 
+    <> 
+      <input value={inputText} onChange={handleChange} /> 
+      <p>You typed: {inputText}</p> 
+      <button onClick={() => setText('hello')}> 
+        Reset 
+      </button> 
+    </> 
+  ); 
+} 
+```
+To do this, let's define a React component and call it InputComponent. This component renders three things:
+
+- An input text field 
+- Any text that has been entered into the field 
+- A Reset button to set the field back to its default state 
