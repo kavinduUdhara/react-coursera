@@ -1,12 +1,18 @@
 import './App.css';
-import Btn from './Btn';
-import MoodTogler from './MoodTogler';
+import Promo from './components/Promo';
+
+let data = {
+  heading : "99% off all items",
+  callToAction: "Everything must go",
+}
 
 function App() {
   return (
     <div>
-      <Btn />
-      <MoodTogler />
+      <Promo
+        heading = {data.heading}
+        callToAction = {data.callToAction}
+      />
     </div>
   );
 }
