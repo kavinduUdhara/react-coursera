@@ -1,5 +1,5 @@
 import './App.css';
-import Promo from './components/Promo';
+import Child from './components/Child';
 
 let data = {
   heading : "99% off all items",
@@ -7,12 +7,10 @@ let data = {
 }
 
 function App() {
+  const date = new Date();
   return (
     <div>
-      <Promo
-        heading = {data.heading}
-        callToAction = {data.callToAction}
-      />
+      <Child message={date.toLocaleTimeString()}/>
     </div>
   );
 }
