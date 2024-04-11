@@ -29,7 +29,7 @@ function App() {
         callToAction = {data.callToAction}
         />
       <p><u>prop data and state data</u></p>
-      <Child message={date.toLocaleTimeString()}/>
+      <Child message={date.toLocaleTimeString()} func={setText}/>
       <p><u>Hooks</u></p>
       <input value={inputText} onChange={handleChange} /> 
       <p>You typed: {inputText}</p> 
