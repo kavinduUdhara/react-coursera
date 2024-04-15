@@ -10,25 +10,34 @@ function App() {
     e.preventDefault(); 
     setResult((result) => result + Number(inputRef.current.value)); 
   }; 
+
+  function sub(e) {
+    e.preventDefault();
+    setResult((reset) => result - Number(inputRef.current.value));
+  }
  
   function minus(e) { 
   	// Add the code for the minus function 
   };
  
   function times(e) { 
-    // Add the code for the plus function 
+    e.preventDefault();
+    setResult((reset) => result * Number(inputRef.current.value));
   }; 
  
   function divide(e) { 
-    // Add the code for the divide function 
+    e.preventDefault();
+    setResult((reset) => result / Number(inputRef.current.value));
   };
  
   function resetInput(e) { 
-    // Add the code for the resetInput function 
+    e.preventDefault();
+    inputRef.current.value = "";
   }; 
- 
+  
   function resetResult(e) { 
-  	// Add the code for the resetResult function 
+    e.preventDefault();
+    setResult(0); 
   }; 
  
   return ( 
@@ -36,6 +45,7 @@ function App() {
       <div> 
         <h1>Simplest Working Calculator</h1> 
       </div> 
+      <p>{result}</p>
       <form> 
         <p ref={resultRef}> 
           {/* add the value of the current total */} 
@@ -48,10 +58,15 @@ function App() {
         /> 
         <button onClick={plus}>add</button> 
         {/* Add the subtract button */} 
+        <button onClick={sub}>subtract</button> 
         {/* Add the multiply button */} 
+        <button onClick={times}>multiply</button> 
         {/* Add the divide button */} 
+        <button onClick={divide}>divide</button> 
         {/* Add the resetInput button */} 
+        <button onClick={resetInput}>reset input</button> 
         {/* Add the resetResult button */} 
+        <button onClick={resetResult}>reset result</button> 
       </form> 
     </div> 
   ); 
