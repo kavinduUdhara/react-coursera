@@ -13,6 +13,7 @@ con-rend - Conditional rendering
 1. [Navigation](#navigation)
 2. [Applying conditional rendering](#applying-conditional-rendering)
 3. [Bundling assets](#bundling-assets)
+4. [Media packages](#media-packages)
 
 # Navigation
 In this reading, you’ll learn about the differences between traditional web pages and React-powered web pages (SPAs – single page applications).
@@ -281,3 +282,52 @@ Sometimes, you can combine client-side rendering and server-side rendering. This
 
 In this reading, you learned about the advantages and disadvantages of embedding assets, including examples of client/server-side assets. You also learned about the trade-offs inherent in the use of asset-heavy apps.
 
+# Media packages
+In this reading, you’ll learn how to install the reactjs-media npm package.
+
+You can find this package on the npmjs.org website at the following URL: 
+
+https://www.npmjs.com/package/react-player
+
+To install this package you'll need to use the following command in the terminal:
+
+```
+npm install react-player
+```
+
+Once you have this package installed, you can start using it in your project.
+
+There are a few ways that you can import and use the installed package. For example, to get the entire package's functionality, use the following import:
+```javascript
+import ReactPlayer from "react-player";
+```
+
+If you are, for example, only planning to use videos from a site like YouTube, to reduce bundle size, you can use the following import:
+```javascript
+import ReactPlayer from "react-player/youtube";
+```
+
+
+Here’s an example of using the react-player packaged in a small React app:
+```javascript
+import React from "react";
+import ReactPlayer from "react-player/youtube";
+
+const App = () => {
+  return (
+    <div>
+      <MyVideo />
+    </div>
+  );
+};
+
+const MyVideo = () => {
+  return (
+    <ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
+  );
+};
+
+export default App;
+```
+
+In this reading, you learned how to install and use the react-player npm package.
