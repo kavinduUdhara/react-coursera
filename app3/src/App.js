@@ -1,20 +1,15 @@
 import './App.css';
-import Home from './components/Home';
-import AnotherPage from './components/AnotherPage';
-import { BrowserRouter, Link } from 'react-router-dom';
-import { Route, Routes } from 'react-router-dom';
+import Weekday from './components/Weekday';
+import Weekend from './components/Weekend';
 
 function App() {
+  const day = new Date().getDay();
   return (
     <div>
-      <nav>
-        <Link to="/">Homepage</Link><br/>
-        <Link to="/another">another</Link>
-      </nav>
-      <Routes>
-        <Route path='/'  element={<Home/>}/>
-        <Route path='/another' element={<AnotherPage/>}/>
-      </Routes>
+      {day >= 1 && day <= 5 
+      ? <Weekday/> 
+      : <Weekend/>}
+      <h1>{day}</h1>
     </div>
   );
 }
