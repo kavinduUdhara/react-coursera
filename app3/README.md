@@ -3,6 +3,12 @@ code for install React Router:
 npm i react-router-dom@6
 ```
 
+following is the branch and dis
+```
+main - navigation
+con-rend - Conditional rendering
+```
+
 # Navigation
 In this reading, you’ll learn about the differences between traditional web pages and React-powered web pages (SPAs – single page applications).
 
