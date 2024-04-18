@@ -69,6 +69,16 @@ const desserts = [
     createdAt: "2022-01-04",
   },
 ];
+
+function App() {
+  return (
+    <div className="App">
+      <h2>List of low calorie desserts:</h2>
+      <DessertsList data={desserts} />
+    </div>
+  );
+}
+
 ```
 
 ### Filtering
