@@ -61,9 +61,15 @@ function App() {
       <li>{`${e.id}. ${e.title} - ${e.price}`}</li>
     )
   })
+
+  const dataList = desserts
+  .filter((e) =>{
+    return e.calories < 500;
+  })
+  console.log(dataList);
   return (
     <div>
-      <h1>Examine the console output</h1>
+      <h1>Basic List component</h1>
       <ul>
       {data.map(e =>{
         return(
@@ -74,6 +80,26 @@ function App() {
       {/*following is same as above but with extra function */}
       <ul>
         {listItems}
+      </ul>
+      <ul>
+        {/*sorted list */}
+        {dataList.map(e =>{
+          return(<li>{e.name} is created at {e.createdAt} with {e.calories} calories!</li>)
+        })}
+        <dd>This is a sorted list</dd>
+        {desserts
+          .filter(e=>{
+            return e.calories < 500
+          })
+          .sort((a,b) =>{
+            return a.calories - b.calories
+          })
+          .map(e => {
+            return(
+              <li>{e.name} is created at {e.createdAt} with {e.calories} calories!</li>
+            )
+          })
+        }
       </ul>
     </div>
   );
