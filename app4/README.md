@@ -5,7 +5,7 @@ list_in_js - Transforming lists in JavaScript
 
 # Bookmarks
 1. [Transforming lists in JavaScript](#Transforming-lists-in-JavaScript)
-2. [Controlled components vs. Uncontrolled components](#Controlled-components-vs.-Uncontrolled-components)
+2. [Controlled components vs. Uncontrolled components](#controlled-components-vs-uncontrolled-components)
 
 # Transforming lists in JavaScript
 
