@@ -5,6 +5,7 @@ list_in_js - Transforming lists in JavaScript
 
 # Bookmarks
 1. [Transforming lists in JavaScript](#Transforming-lists-in-JavaScript)
+2. [Controlled components vs. Uncontrolled components](#Controlled-components-vs.-Uncontrolled-components)
 
 # Transforming lists in JavaScript
 
@@ -351,3 +352,5 @@ The below table summarizes the features that each one supports:
     <td>Yes</td>
   </tr>
 </table>
+
+And that's it about controlled vs. uncontrolled components. You have learned in detail about each option, when to pick one or another, and finally, a comparison of the features supported.
