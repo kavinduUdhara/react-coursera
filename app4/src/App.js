@@ -1,23 +1,29 @@
+import React, {useRef, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  const inputRef = useRef(null);
+  const [inputVal, setInputVal] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); 
+    const inputValue = inputRef.current.value;
+    console.log(inputValue);
+    setInputVal("");
+  }
+  const handleChange = (e) => {
+    e.preventDefault();
+    setInputVal(inputRef.current.value);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input type='text' ref={inputRef} onChange={handleChange} value={inputVal}/>
+        <input type='submit' disabled={!inputVal}/>
+      </form>
+      <h2>{inputVal}</h2>
     </div>
   );
 }
