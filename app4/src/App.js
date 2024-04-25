@@ -1,22 +1,14 @@
-import React, { createContext, useContext, useState } from "react";
-
-const userContext = createContext();
+import React from "react";
+import { useUser} from "./components/UserContext";
 
 function App(){
-  const [user, setUser] = useState('Kavindu');
-
+  const user = useUser();
+  console.log(useUser());
   return(
-    <userContext.Provider value={user}>
-      <h1>Hello world</h1>
-      <Compo1/>
-    </userContext.Provider>
-  )
-}
-
-function Compo1(){
-  const user = useContext(userContext);
-  return(
-    <p>Hello {user}</p>
+    <div>
+        <p>hello {user}</p>
+        <h1>I'm {user}</h1>
+    </div>
   )
 }
 
