@@ -1,70 +1,170 @@
-# Getting Started with Create React App
+# Bookmarks
+1. [Working with complex data in useState](#)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Working with complex data in useState
+In this reading, you will learn how to use objects as state variables when using `useState`. You will also discover the proper way to only update specific properties, such as state objects and why this is done. This will be demonstrated by exploring what happens when changing the string data type to an object.
 
-## Available Scripts
+An example of holding state in an object and updating it based on user-generated events
 
-In the project directory, you can run:
+When you need to hold state in an object and update it, initially, you might try something like this:
 
-### `npm start`
+```javascript
+import { useState } from "react"; 
+ 
+export default function App() { 
+  const [greeting, setGreeting] = useState({ greet: "Hello, World" }); 
+  console.log(greeting, setGreeting); 
+ 
+  function updateGreeting() { 
+    setGreeting({ greet: "Hello, World-Wide Web" }); 
+  } 
+ 
+  return ( 
+    <div> 
+      <h1>{greeting.greet}</h1> 
+      <button onClick={updateGreeting}>Update greeting</button> 
+    </div> 
+  ); 
+} 
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+While this works, it's not the recommended way of working with state objects in React, this is because the state object usually has more than a single property, and it is costly to update the entire object just for the sake of updating only a small part of it.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The correct way to update the state object in React when using useState
 
-### `npm test`
+he suggested approach for updating the state object in React when using useState is to copy the state object and then update the copy.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This usually involves using the spread operator (`...`).
 
-### `npm run build`
+Keeping this in mind, here's the updated code:
+```javascript
+import { useState } from "react"; 
+ 
+export default function App() { 
+  const [greeting, setGreeting] = useState({ greet: "Hello, World" }); 
+  console.log(greeting, setGreeting); 
+ 
+  function updateGreeting() { 
+    const newGreeting = {...greeting}; 
+    newGreeting.greet = "Hello, World-Wide Web"; 
+    setGreeting(newGreeting); 
+  } 
+ 
+  return ( 
+    <div> 
+      <h1>{greeting.greet}</h1> 
+      <button onClick={updateGreeting}>Update greeting</button> 
+    </div> 
+  ); 
+} 
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Incorrect ways of trying to update the state object
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To prove that a copy of the old state object is needed to update state, let’s explore what happens when you try to update the old state object directly:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```javascript
+import { useState } from "react"; 
+ 
+export default function App() { 
+  const [greeting, setGreeting] = useState({ greet: "Hello, World" }); 
+  console.log(greeting, setGreeting); 
+ 
+  function updateGreeting() { 
+    greeting = {greet: "Hello, World-Wide Web}; 
+    setGreeting(greeting); 
+  } 
+ 
+  return ( 
+    <div> 
+      <h1>{greeting.greet}</h1> 
+      <button onClick={updateGreeting}>Update greeting</button> 
+    </div> 
+  ); 
+} 
+```
 
-### `npm run eject`
+The above code does not work because it has a TypeError hiding inside of it.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Specifically, the TypeError is: "Assignment to constant variable".
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+In other words, you cannot reassign a variable declared using const, such as in the case of the useState hook's array destructuring:
+```javascript
+const [greeting, setGreeting] = useState({ greet: "Hello, World" }); 
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Another approach you might attempt to use to work around the suggested way of updating state when working with a state object might be the following: 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```javascript
+import { useState } from "react"; 
+ 
+export default function App() { 
+  const [greeting, setGreeting] = useState({ greet: "Hello, World" }); 
+  console.log(greeting, setGreeting); 
+ 
+  function updateGreeting() { 
+    greeting.greet = "Hello, World-Wide Web; 
+    setGreeting(greeting); 
+  } 
+ 
+  return ( 
+    <div> 
+      <h1>{greeting.greet}</h1> 
+      <button onClick={updateGreeting}>Update greeting</button> 
+    </div> 
+  ); 
+} 
+```
 
-## Learn More
+The above code is problematic because it doesn't throw any errors; however, it also doesn't update the heading, so it is not working correctly. This means that, regardless of how many times you click the "Update greeting" button, it will still be "Hello, World".
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To reiterate, the proper way of working with state when it's saved as an object is to:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Copy the old state object using the spread (...) operator and save it into a new variable and
+2. Pass the new variable to the state-updating function
 
-### Code Splitting
+Updating the state object using arrow functions
+Now, let’s use a more complex object to update state.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The state object now has two properties: greet and location.
 
-### Analyzing the Bundle Size
+The intention of this update is to demonstrate what to do when only a specific property of the state object is changing, while keeping the remaining properties unchanged:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```javascript
+import { useState } from "react"; 
+ 
+export default function App() { 
+  const [greeting, setGreeting] = useState( 
+    { 
+        greet: "Hello", 
+        place: "World" 
+    } 
+  ); 
+  console.log(greeting, setGreeting); 
+ 
+  function updateGreeting() { 
+    setGreeting(prevState => { 
+        return {...prevState, place: "World-Wide Web"} 
+    }); 
+  } 
+ 
+  return ( 
+    <div> 
+      <h1>{greeting.greet}, {greeting.place}</h1> 
+      <button onClick={updateGreeting}>Update greeting</button> 
+    </div> 
+  ); 
+} 
+```
 
-### Making a Progressive Web App
+The reason this works is because it uses the previous state, which is named prevState, and this is the previous value of the greeting variable. In other words, it makes a copy of the prevState object, and updates only the place property on the copied object. It then returns a brand-new object: 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```javascript
+return {...prevState, place: "World-Wide Web"} 
+```
 
-### Advanced Configuration
+Everything is wrapped in curly braces so that this new object is built correctly, and it is returned from the call to setGreeting.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Conclusion
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+You have learned what happens when changing the string data type to an object, with examples of holding state in an object and updating it based on user-generated events. You also learned about correct and incorrect ways to update the state object in React when using useState, and about updating the state object using arrow functions.
