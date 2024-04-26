@@ -12,7 +12,22 @@ export default function App() {
   );
 
   function spendGiftCard() {
+    //method 1
+    // const newGiftCard = {...giftCard};
+    // newGiftCard.text = "Your coupon has been used";
+    // newGiftCard.valid = false;
+    // newGiftCard.instructions = "Please visit our restaurant to renew your gift card";
+    // setGiftCard(newGiftCard);
 
+    //method 2
+    setGiftCard(prev => {
+      return{
+        ...prev,
+        text: "Your coupon has been used",
+        valid: false,
+        instructions: "Please visit our restaurant to renew your gift card",
+      }
+    })
   }
 
   return (
