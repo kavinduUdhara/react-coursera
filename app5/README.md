@@ -1,5 +1,6 @@
 # branches
 ```
+manage-state - Exercise: Managing state within a component
 useEffect - Using the useEffect hook
 ```
 
