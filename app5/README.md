@@ -8,7 +8,7 @@ useEffect - Using the useEffect hook
 1. [Working with complex data in useState](#working-with-complex-data-in-usestate)
 2. [What is the useEffect hook?](#what-is-the-useeffect-hook)
 3. [Data fetching using hooks](#data-fetching-using-hooks)
-4. [When to choose useReducer vs useState](#)
+4. [When to choose useReducer vs useState](#when-to-choose-usereducer-vs-usestate)
 
 # Working with complex data in useState
 In this reading, you will learn how to use objects as state variables when using `useState`. You will also discover the proper way to only update specific properties, such as state objects and why this is done. This will be demonstrated by exploring what happens when changing the string data type to an object.
