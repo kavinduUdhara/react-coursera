@@ -2,6 +2,7 @@
 ```
 manage-state - Exercise: Managing state within a component
 useEffect - Using the useEffect hook
+useReducer - What is useReducer and how it differs from useState
 ```
 
 # Bookmarks
