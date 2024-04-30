@@ -9,6 +9,26 @@ my practice works aligned with coursera react course
     <th>folder(#app)</th>
   </tr>
   <tr>
+    <td>expression-as-props</td>
+    <td>expression as props</td>
+    <td>app1</td>
+  </tr>
+  <tr>
+    <td>data-and-events</td>
+    <td>data and events</td>
+    <td>app2</td>
+  </tr>
+  <tr>
+    <td>main</td>
+    <td>navigation</td>
+    <td>app3</td>
+  </tr>
+  <tr>
+    <td>con-rend</td>
+    <td>Conditional rendering</td>
+    <td>app3</td>
+  </tr>
+  <tr>
     <td>list_in_js</td>
     <td>Transforming lists in JavaScript</td>
     <td>app4</td>
@@ -16,6 +36,11 @@ my practice works aligned with coursera react course
   <tr>
     <td>react-contex</td>
     <td>What is Context, and why is it used?</td>
+    <td>app4</td>
+  </tr>
+  <tr>
+    <td>forms-in-react</td>
+    <td>forms in react</td>
     <td>app4</td>
   </tr>
   <tr>
