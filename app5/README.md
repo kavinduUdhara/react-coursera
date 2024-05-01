@@ -2,12 +2,16 @@
 ```
 manage-state - Exercise: Managing state within a component
 useEffect - Using the useEffect hook
+useReducer - What is useReducer and how it differs from useState
 ```
 
 # Bookmarks
 1. [Working with complex data in useState](#working-with-complex-data-in-usestate)
 2. [What is the useEffect hook?](#what-is-the-useeffect-hook)
-3. [Data fetching using hooks](#)
+3. [Data fetching using hooks](#data-fetching-using-hooks)
+4. [When to choose useReducer vs useState](#when-to-choose-usereducer-vs-usestate)
+5. [Build a Radio Group Component (component composition with children.)](#build-a-radio-group-component)
+
 
 # Working with complex data in useState
 In this reading, you will learn how to use objects as state variables when using `useState`. You will also discover the proper way to only update specific properties, such as state objects and why this is done. This will be demonstrated by exploring what happens when changing the string data type to an object.
@@ -399,3 +403,143 @@ Conclusion
 You learned more about fetching data using hooks and that fetching data from a third-party API is considered a side-effect that requires the use of the useEffect hook to deal with the Fetch API calls in React.
 
 You also explored how the response from fetching third-party data might fail, or be delayed, and that it can be useful to provide different renders, based on whether or not the data has been received.
+
+# When to choose useReducer vs useState
+
+The useState hook is best used on less complex data.
+
+While it's possible to use any kind of a data structure when working with useState, it's better to use it with primitive data types, such as strings, numbers, or booleans.
+
+The useReducer hook is best used on more complex data, specifically, arrays or objects.
+
+While this rule is simple enough, there are situations where you might be working with a simple object and still decide to use the useState hook.
+
+Such a decision might stem from the simple fact that working with useState can sometimes feel easier than thinking about how the state is controlled when working with useReducer.
+
+It might help conceptualizing this dilemma as a gradual scale, on the left side of which, there is the useState hook with primitive data types and simple use cases, such as toggling a variable on or off.
+
+At the end of this spectrum, there is the useReducer hook used to control state of large state-holding objects.
+
+There's no clear-cut point on this spectrum, at which point you would decide: "If my state object has three or more properties, I'll use the useReducer hook".
+
+Sometimes such a statement might make sense, and other times it might not.
+
+What's important to remember is to keep your code simple to understand, collaborate on, contribute to, and build from.
+
+One negative characteristic of useState is that it often gets hard to maintain as the state gets more complex.
+
+On the flip side, a negative characteristic of useReducer is that it requires more prep work to begin with. There's more setup involved. However, once this setup is completed, it gets easier to extend the code based on new requirements.
+
+Conclusion
+
+You learned about the decision-making process when choosing between useReducer and useState for working with different types of data.
+
+
+# Build a Radio Group Component
+
+Here is the completed solution code for the `Radio/index.js` file:
+
+```javascript
+import * as React from "react";
+
+export const RadioGroup = ({ onChange, selected, children }) => { 
+ const RadioOptions = React.Children.map(children, (child) => { 
+   return React.cloneElement(child, { 
+     onChange, 
+     checked: child.props.value === selected, 
+   }); 
+ }); 
+ return <div className="RadioGroup">{RadioOptions}</div>; 
+}; 
+ 
+export const RadioOption = ({ value, checked, onChange, children }) => { 
+ return ( 
+   <div className="RadioOption"> 
+     <input 
+       id={value} 
+       type="radio" 
+       name={value} 
+       value={value} 
+       checked={checked} 
+       onChange={(e) => { 
+         onChange(e.target.value); 
+       }} 
+     /> 
+     <label htmlFor={value}>{children}</label> 
+   </div> 
+ ); 
+}; 
+```
+
+Step 1
+
+The API for the RadioGroup component is defined as two props: selected, which is a string that matches one of the RadioOption values and onChange, which is the event that gets called whenever a selection changes, providing the new value as an argument.
+
+```javascript
+<RadioGroup onChange={setSelected} selected={selected}> 
+ <RadioOption value="social_media">Social Media</RadioOption> 
+ <RadioOption value="friends">Friends</RadioOption> 
+ <RadioOption value="advertising">Advertising</RadioOption> 
+ <RadioOption value="other">Other</RadioOption>
+</RadioGroup> 
+```
+
+Step 2
+
+The RadioOptions variable should be assigned to the return value of React.Children.map, which will be a new React element. The first argument passed to the map function should be the children prop, and the second is a function that gets invoked in every child contained within the children property. Recall that a children prop is a special prop all React components have and that it presents a special data structure, similar to arrays, where you can perform iterations. However, they are not exactly instances of JavaScript arrays. That’s why to iterate over all siblings you should use the special React.children.map API provided by React.
+
+Inside the map projection function, you should first clone the element using React.cloneElement, passing as first argument the target child element and as a second argument a configuration with all new props. The resulting element will have the original element’s props with the new props merged in.
+
+onChange can be passed to each child (RadioOption) as it is and checked is the property the RadioOption uses to determine if the underlying radio input is selected. Since RadioGroup receives a selected property, which is a string pointing to the value of the option that has been selected, checked will be only true for one of the options at any point in time. This is guaranteed by performing an equality check, comparing the RadioOption value prop with the selected value.
+
+Finally, the RadioGroup component returns the new RadioOptions elements by wrapping them in curly braces.
+
+```javascript
+import * as React from "react";
+
+export const RadioGroup = ({ onChange, selected, children }) => { 
+ const RadioOptions = React.Children.map(children, (child) => { 
+   return React.cloneElement(child, { 
+     onChange, 
+     checked: child.props.value === selected, 
+   }); 
+ }); 
+ return <div className="RadioGroup">{RadioOptions}</div>; 
+};
+```
+
+Step 3
+
+The RadioOption component now receives two new props implicitly, onChange and checked, that RadioGroup is injecting via children manipulation, as seen in the previous section.
+
+The value prop is already provided explicitly inside the App.js component and children represents the label text for the radio input. 
+
+You have to connect the props value, checked and onChange correctly. First, both value and checked props should be passed to the radio input as is. Then, you should use the onChange event from the radio input, retrieve the value property from the event target object and pass it to the onChange prop as the argument as seen below. That completes the implementation of the RadioOption component.
+
+```javascript
+export const RadioOption = ({ value, checked, onChange, children }) => { 
+ return ( 
+   <div className="RadioOption"> 
+     <input 
+       id={value} 
+       type="radio" 
+       name={value} 
+       value={value} 
+       checked={checked} 
+       onChange={(e) => { 
+         onChange(e.target.value); 
+       }} 
+     /> 
+     <label htmlFor={value}>{children}</label> 
+   </div> 
+ ); 
+}; 
+```
+
+Step 4
+
+Once you run the application in the browser, you should see something similar to the screenshot below.
+
+The important thing is that the button should be enabled as soon as a selection is made. Don't worry if nothing happens when you click it, it's intended. In this exercise, the button click event has no action bound to it.
+
+![image](https://github.com/kavinduUdhara/react-coursera/assets/88233364/8de807cb-96ca-4bd9-8a3d-b6a0ca88b43a)
