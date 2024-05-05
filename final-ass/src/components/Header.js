@@ -55,6 +55,7 @@ const Header = () => {
       transitionDuration=".3s"
       transitionTimingFunction="ease-in-out"
       backgroundColor="#18181b"
+      style={{zIndex: "10"}}
     >
       <Box color="white" maxWidth="1280px" margin="0 auto">
         <HStack
@@ -64,11 +65,14 @@ const Header = () => {
           alignItems="center"
         >
           <nav>
-            {/* Add social media links based on the `socials` data */}
+            {socials.map((e) => {
+              return(<a href={e.url} style={{marginLeft: "15px"}}><FontAwesomeIcon icon={e.icon} size="2x"/></a>)
+            })}
           </nav>
           <nav>
             <HStack spacing={8}>
-              {/* Add links to Projects and Contact me section */}
+              <a href="#contactme-section">Contact Me</a>
+              <a href="#projects-section">Projects</a>
             </HStack>
           </nav>
         </HStack>
